@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -23,7 +21,8 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.mikoo1991.couplesdk"
+      "package": "com.mikoo1991.couplesdk",
+      "versionCode": 2
     }
   }
 }

@@ -41,17 +41,16 @@ const Login = ({ navigation }) => {
         let token;
         if (!userResponse.data.user.pushToken) {
           token = await NotificationService.getPushToken();
+
           const data = {
             pushToken: token,
           };
 
-          await (await HttpClient()).post(
+          const response = await (await HttpClient()).post(
             config.SERVER_URL + "/api/user/set-push-token",
             data
           );
         }
-
-        console.log("here");
         setUser(userResponse.data.user);
         setSocket(
           io(config.SERVER_URL, {
@@ -59,6 +58,7 @@ const Login = ({ navigation }) => {
             upgrade: false,
           })
         );
+        navigation.navigate("Søg Brugere");
       }
     } catch (e) {
       setError(e.response.data.message);
@@ -94,6 +94,7 @@ const Login = ({ navigation }) => {
               onChangeText={(text) => setPassword(text)}
               style={styles.input}
               autoCapitalize="none"
+              secureTextEntry={true}
             />
           </View>
           <Button title="Log Ind" onPress={() => login()} />

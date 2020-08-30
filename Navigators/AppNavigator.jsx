@@ -96,8 +96,8 @@ export const AppNavigator = () => {
                 onPress={async () => {
                   props.navigation.navigate("Søg Brugere");
                   props.navigation.closeDrawer();
-                  setUser(null);
                   await AsyncStorage.removeItem("token");
+                  setUser(null);
                 }}
                 title="Log Ud"
                 color="#F44336"
@@ -107,12 +107,11 @@ export const AppNavigator = () => {
         );
       }}
     >
+      <DrawerNavigator.Screen name="Søg Brugere" component={BrowseUsers} />
+
       {!user && <DrawerNavigator.Screen name="Login" component={Login} />}
       {!user && <DrawerNavigator.Screen name="Register" component={Register} />}
 
-      {user && (
-        <DrawerNavigator.Screen name="Søg Brugere" component={BrowseUsers} />
-      )}
       {user && <DrawerNavigator.Screen name="Match" component={Match} />}
       {user && <DrawerNavigator.Screen name="Chat" component={Chat} />}
       {user && (

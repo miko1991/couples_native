@@ -19,7 +19,6 @@ import * as ImagePicker from "expo-image-picker";
 import { Icon } from "react-native-elements";
 
 const Profile = ({ route, navigation }) => {
-  const { id } = route.params;
   const { user, setUser, socket, onlineUsers } = useContext(AppContext);
   const [profile, setProfile] = useState(null);
   const [message, setMessage] = useState("");
@@ -60,11 +59,11 @@ const Profile = ({ route, navigation }) => {
   ];
 
   useEffect(() => {
-    if (!id) {
+    if (!route && !route.params && !route.params.id) {
       return navigation.navigate("Søg Brugere");
     }
     getUser();
-  }, [id]);
+  }, [route]);
 
   useEffect(() => {
     if (isOwnProfile() && user) {
@@ -192,25 +191,32 @@ const Profile = ({ route, navigation }) => {
   }
 
   const getUser = async () => {
-    setRefreshing(true);
-    const { data } = await (await HttpClient()).get(
-      config.SERVER_URL + "/api/user/get-user-by-id/" + id
-    );
-    setRefreshing(false);
-    setProfile(data.user);
-    setMatch(data.match);
-    setInitiated(true);
+    if (!route && !route.params && !route.params.id) return;
+    try {
+      console.log(route.params.id);
+      const id = route.params.id;
+      setRefreshing(true);
+      const { data } = await (await HttpClient()).get(
+        config.SERVER_URL + "/api/user/get-user-by-id/" + id
+      );
+      setRefreshing(false);
+      setProfile(data.user);
+      setMatch(data.match);
+      setInitiated(true);
 
-    if (socket && user) {
-      const notificationData = {
-        url: `/profile/${user._id}`,
-        type: "new-visit",
-        text: `Nyt besøg fra ${user.displayName}`,
-        user: data.user,
-        resourceId: user._id,
-      };
+      if (socket && user) {
+        const notificationData = {
+          url: `/profile/${user._id}`,
+          type: "new-visit",
+          text: `Nyt besøg fra ${user.displayName}`,
+          user: data.user,
+          resourceId: user._id,
+        };
 
-      socket.emit("notification", notificationData);
+        socket.emit("notification", notificationData);
+      }
+    } catch (e) {
+      navigation.navigate("Søg Brugere");
     }
   };
 
@@ -699,7 +705,9 @@ const Profile = ({ route, navigation }) => {
         </Overlay>
 
         {initiated && isUserBlocked() && (
-          <h1 className="text-3xl text-center text-red-500">Du er blokeret</h1>
+          <Text style={{ textAlign: "center", fontSize: 40 }}>
+            Du er blokeret
+          </Text>
         )}
 
         <Snackbar
