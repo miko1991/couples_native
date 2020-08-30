@@ -60,6 +60,9 @@ const Profile = ({ route, navigation }) => {
   ];
 
   useEffect(() => {
+    if (!id) {
+      return navigation.navigate("Søg Brugere");
+    }
     getUser();
   }, [id]);
 

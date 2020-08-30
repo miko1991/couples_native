@@ -6,6 +6,7 @@ import {
   Image,
   Text,
   Platform,
+  AsyncStorage,
 } from "react-native";
 import {
   createDrawerNavigator,
@@ -20,6 +21,7 @@ import config from "../config";
 import Match from "../Screens/Match/Match";
 import Favorites from "../Screens/Favorites/Favorites";
 import Profile from "../Screens/Profile/Profile";
+import Register from "../Screens/Register/Register";
 
 const DrawerNavigator = createDrawerNavigator();
 
@@ -65,7 +67,11 @@ export const AppNavigator = () => {
               ) : (
                 <View style={{ marginBottom: 20, alignItems: "center" }}>
                   <Image
-                    source={{ uri: config.SERVER_URL + user.profileImagePath }}
+                    source={
+                      user.profileImagePath
+                        ? { uri: config.SERVER_URL + user.profileImagePath }
+                        : require("../assets/default_profile_image.jpg")
+                    }
                     style={{
                       width: 75,
                       height: 75,
@@ -86,13 +92,23 @@ export const AppNavigator = () => {
             </View>
             <DrawerItemList state={newState} {...rest} />
             <View style={{ flex: 1, justifyContent: "flex-end" }}>
-              <Button onPress={() => {}} title="Log Ud" color="#F44336" />
+              <Button
+                onPress={async () => {
+                  props.navigation.navigate("Søg Brugere");
+                  props.navigation.closeDrawer();
+                  setUser(null);
+                  await AsyncStorage.removeItem("token");
+                }}
+                title="Log Ud"
+                color="#F44336"
+              />
             </View>
           </SafeAreaView>
         );
       }}
     >
       {!user && <DrawerNavigator.Screen name="Login" component={Login} />}
+      {!user && <DrawerNavigator.Screen name="Register" component={Register} />}
 
       {user && (
         <DrawerNavigator.Screen name="Søg Brugere" component={BrowseUsers} />

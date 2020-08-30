@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add expo-notifications
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-swipe-gesture
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\mikoo\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\PuTTY;C:\Program Files\Git\cmd;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\dotnet;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Users\mikoo\AppData\Local\Microsoft\WindowsApps;C:\Users\mikoo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\mikoo\AppData\Roaming\Composer\vendor\bin;C:\Users\mikoo\.dotnet\tools;C:\Users\mikoo\AppData\Roaming\npm;C:\Users\mikoo\AppData\Local\Yarn\bin
@@ -14,7 +14,17 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\mikoo\Desktop\Work\React Native\couples_native\node_modules\@expo\configure-splash-screen\node_modules\xcode\node_modules\.bin'
+  Error: https://registry.yarnpkg.com/react-native-swipe-gesture: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66096:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140748:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141720:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141642:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (_stream_readable.js:1220:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
 
 npm manifest: 
   {
@@ -30,23 +40,32 @@ npm manifest:
       "@react-native-community/masked-view": "0.1.10",
       "@react-navigation/drawer": "^5.9.0",
       "@react-navigation/native": "^5.7.3",
+      "@react-navigation/stack": "^5.9.0",
       "axios": "^0.20.0",
       "buffer": "^5.6.0",
       "expo": "~38.0.8",
+      "expo-camera": "~8.3.1",
+      "expo-image-picker": "~8.3.0",
+      "expo-notifications": "~0.3.3",
+      "expo-permissions": "~9.0.1",
       "expo-status-bar": "^1.0.2",
       "moment": "^2.27.0",
       "react": "~16.11.0",
       "react-dom": "~16.11.0",
       "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
+      "react-native-datepicker": "^1.7.2",
       "react-native-elements": "^2.2.1",
       "react-native-gesture-handler": "~1.6.0",
       "react-native-get-random-values": "^1.4.0",
       "react-native-google-places-autocomplete": "^1.8.0",
+      "react-native-image-picker": "^2.3.3",
       "react-native-paper": "^4.0.1",
       "react-native-places-input": "^1.1.6",
+      "react-native-pull-refresh": "^1.0.0",
       "react-native-reanimated": "~1.9.0",
       "react-native-safe-area-context": "~3.0.7",
       "react-native-screens": "~2.9.0",
+      "react-native-snack": "^1.0.2",
       "react-native-uuid": "^1.4.9",
       "react-native-uuid-generator": "^6.1.1",
       "react-native-web": "~0.11.7",
@@ -54,7 +73,8 @@ npm manifest:
       "react-navigation-drawer": "^2.5.0",
       "react-navigation-header-buttons": "^5.0.2",
       "socket.io-client": "2.1.1",
-      "uuid": "^8.3.0"
+      "uuid": "^8.3.0",
+      "validator": "^13.1.1"
     },
     "devDependencies": {
       "@babel/core": "^7.8.6",
@@ -1352,6 +1372,14 @@ Lockfile:
     dependencies:
       nanoid "^3.1.12"
   
+  "@react-navigation/stack@^5.9.0":
+    version "5.9.0"
+    resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.9.0.tgz#bf24607175bf502798cc4c832aa8a86e55f3b365"
+    integrity sha512-kt6M0ZLMyNKXfKi50n01bHg4/d8zp0Yh5QaQG4d1roWOqdV9ou1nFEK4l2yQ6XKH2lLSYswHElPDZUuWd+6XzA==
+    dependencies:
+      color "^3.1.2"
+      react-native-iphone-x-helper "^1.2.1"
+  
   "@types/color-name@^1.1.1":
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -1784,7 +1812,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/backo2/-/backo2-1.0.2.tgz#31ab1ac8b129363463e35b3ebb69f4dfcfba7947"
     integrity sha1-MasayLEpNjRj41s+u2n038+6eUc=
   
-  badgin@^1.1.2:
+  badgin@^1.1.2, badgin@^1.1.5:
     version "1.1.8"
     resolved "https://registry.yarnpkg.com/badgin/-/badgin-1.1.8.tgz#6e4c930554945d31752e5de2d8a316036dccda5e"
     integrity sha512-EGbhb5OwZreHS0vd8tFLzdWBqvz3dFREf1sYK5EtivtTDUkYCLSEKz1KvXJ4MBHAyKGDymx8wYPCQwrftQBifw==
@@ -2676,6 +2704,11 @@ Lockfile:
       snapdragon "^0.8.1"
       to-regex "^3.0.1"
   
+  expo-application@~2.2.1:
+    version "2.2.1"
+    resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-2.2.1.tgz#f14b83ae0b07e4922850f8856a56f141c168d6d0"
+    integrity sha512-YyYB2EPWmFmXgmnul9AMdZ6Ze290BWaez7RhUfAMq2gQU84EdpvL3vkO9SV5E4zI7Rj2jfS0VcCDpxrcdlBW/w==
+  
   expo-asset@~8.1.7:
     version "8.1.7"
     resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.1.7.tgz#32618e51f85df56f1d7dd54c71eb486ae7f7674e"
@@ -2687,7 +2720,17 @@ Lockfile:
       path-browserify "^1.0.0"
       url-parse "^1.4.4"
   
-  expo-constants@~9.1.1:
+  expo-camera@~8.3.1:
+    version "8.3.1"
+    resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-8.3.1.tgz#e17c080c4aafd71f66495c2b6dfc53dcd31b0368"
+    integrity sha512-weFanDVsJKAbm5g90zWIUD4zVrXKoQq7g2BTg4zy4p24YsGfXKYRH4ja0YRgr3Ci/abGaaRNZjsPMJiNskR+tA==
+    dependencies:
+      fbjs "1.0.0"
+      invariant "2.2.4"
+      lodash "^4.6.0"
+      prop-types "^15.6.0"
+  
+  expo-constants@9.1.1, expo-constants@~9.1.1:
     version "9.1.1"
     resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.1.1.tgz#bca141ee3d4550e308798128f66c6d9c6a206ca1"
     integrity sha512-zCa/wRARODHd6BSwxjBhidmao0AqQnKmLkl0tsVIoZlRyPDHsEaxNR/m+7wqGC7qiC+UpG1qRnvLOLwCGt2ihg==
@@ -2717,6 +2760,14 @@ Lockfile:
       fbjs "1.0.0"
       fontfaceobserver "^2.1.0"
   
+  expo-image-picker@~8.3.0:
+    version "8.3.0"
+    resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-8.3.0.tgz#5a9daacbc1afa7fdbfd31edb22818524ad0b85e2"
+    integrity sha512-HCF7SumPE4jXH+EhJ19Xw6G8Lxpms1z6Hxdq/kLlzvZGdzH4ZFBqp3NyTO7dtm0dXtjduljpNK7kQfwWtvmIWQ==
+    dependencies:
+      expo-permissions "~9.0.1"
+      uuid "7.0.2"
+  
   expo-keep-awake@~8.2.1:
     version "8.2.1"
     resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-8.2.1.tgz#a7956ad0fa80eb6ac6a28bb7242408e87c493677"
@@ -2744,6 +2795,16 @@ Lockfile:
     integrity sha512-MixKapt3nijAxyjIISscBzdKi8bwh0H/dWYsL2mCofrjguFHOh2gP07h95902lekb7NVqybl5AIQRW5cvrG4rQ==
     dependencies:
       invariant "^2.2.4"
+  
+  expo-notifications@~0.3.3:
+    version "0.3.3"
+    resolved "https://registry.yarnpkg.com/expo-notifications/-/expo-notifications-0.3.3.tgz#3c7b7275516028853e02f5c796e3365d4fb572ad"
+    integrity sha512-iBqvlbB6UVkU5yF4W9K/sqdPIbJ52VVeL7543G4IA3ARWhx6wdhfzcuGTCtUgV0XmkJu7vmPs+sC31aXjRa0Kg==
+    dependencies:
+      badgin "^1.1.5"
+      expo-application "~2.2.1"
+      expo-constants "9.1.1"
+      uuid "^3.4.0"
   
   expo-permissions@~9.0.1:
     version "9.0.1"
@@ -3327,7 +3388,7 @@ Lockfile:
       strip-ansi "^4.0.0"
       through "^2.3.6"
   
-  invariant@>=2, invariant@^2.2.2, invariant@^2.2.4:
+  invariant@2.2.4, invariant@>=2, invariant@^2.2.2, invariant@^2.2.4:
     version "2.2.4"
     resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
     integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -4280,7 +4341,7 @@ Lockfile:
     dependencies:
       minimist "^1.2.5"
   
-  moment@^2.27.0:
+  moment@^2.22.0, moment@^2.27.0:
     version "2.27.0"
     resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
     integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
@@ -4840,6 +4901,13 @@ Lockfile:
       invariant "^2.2.4"
       use-subscription "^1.0.0"
   
+  react-native-datepicker@^1.7.2:
+    version "1.7.2"
+    resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
+    integrity sha1-WNCCJZGgrJsyq6CCZQIioO4pZp0=
+    dependencies:
+      moment "^2.22.0"
+  
   react-native-elements@^2.2.1:
     version "2.2.1"
     resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-2.2.1.tgz#1d95aa7ee2020f72e0bc779d574fefcf072b7086"
@@ -4881,6 +4949,11 @@ Lockfile:
       prop-types "^15.5.10"
       qs "~6.9.1"
   
+  react-native-image-picker@^2.3.3:
+    version "2.3.3"
+    resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-2.3.3.tgz#eaacd4a1ed9e9887613be31f0765478ca2f18a51"
+    integrity sha512-i/7JDnxKkUGSbFY2i7YqFNn3ncJm1YlcrPKXrXmJ/YUElz8tHkuwknuqBd9QCJivMfHX41cmq4XvdBDwIOtO+A==
+  
   react-native-iphone-x-helper@^1.2.1:
     version "1.2.1"
     resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
@@ -4906,6 +4979,11 @@ Lockfile:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/react-native-platform-touchable/-/react-native-platform-touchable-1.1.1.tgz#fde4acc65eea585d28b164d0c3716a42129a68e4"
     integrity sha1-/eSsxl7qWF0osWTQw3FqQhKaaOQ=
+  
+  react-native-pull-refresh@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/react-native-pull-refresh/-/react-native-pull-refresh-1.0.0.tgz#890968a002466050c621a628bd095e03bbb6887a"
+    integrity sha1-iQlooAJGYFDGIaYovQleA7u2iHo=
   
   react-native-ratings@^7.2.0:
     version "7.3.0"
@@ -4938,6 +5016,14 @@ Lockfile:
     version "2.9.0"
     resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.9.0.tgz#ead2843107ba00fee259aa377582e457c74f1f3b"
     integrity sha512-5MaiUD6HA3nzY3JbVI8l3V7pKedtxQF3d8qktTVI0WmWXTI4QzqOU8r8fPVvfKo3MhOXwhWBjr+kQ7DZaIQQeg==
+  
+  react-native-snack@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/react-native-snack/-/react-native-snack-1.0.2.tgz#e4772df8fc524eb48358d86cb5e740e3b327dfeb"
+    integrity sha512-cSGv8C5nkugllJMQtG0wiPA9vcE3e0rzpAEdEuczQIq9myKtzQvjUuZY7IpUodo4h4UlXCWlB8qMCpcJ+diQUw==
+    dependencies:
+      lodash "^4.17.14"
+      react-native-iphone-x-helper "^1.2.1"
   
   react-native-status-bar-height@^2.5.0:
     version "2.5.0"
@@ -5952,6 +6038,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
     integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
   
+  uuid@7.0.2:
+    version "7.0.2"
+    resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.2.tgz#7ff5c203467e91f5e0d85cfcbaaf7d2ebbca9be6"
+    integrity sha512-vy9V/+pKG+5ZTYKf+VcphF5Oc6EFiu3W8Nv3P3zIh0EqVI80ZxOzuPfe9EHjkFNvf8+xuTHVeei4Drydlx4zjw==
+  
   uuid@^3.3.2, uuid@^3.4.0:
     version "3.4.0"
     resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
@@ -5966,6 +6057,11 @@ Lockfile:
     version "8.3.0"
     resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
     integrity sha512-fX6Z5o4m6XsXBdli9g7DtWgAx+osMsRRZFKma1mIUsLCz6vRvv+pz5VNbyu9UEDzpMWulZfvpgb/cmDXVulYFQ==
+  
+  validator@^13.1.1:
+    version "13.1.1"
+    resolved "https://registry.yarnpkg.com/validator/-/validator-13.1.1.tgz#f8811368473d2173a9d8611572b58c5783f223bf"
+    integrity sha512-8GfPiwzzRoWTg7OV1zva1KvrSemuMkv07MA9TTl91hfhe+wKrsrgVN4H2QSFd/U/FhiU3iWPYVgvbsOGwhyFWw==
   
   vary@~1.1.2:
     version "1.1.2"

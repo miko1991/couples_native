@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, Button, Picker, Image } from "react-native";
+import { View, Text, Button, Picker, Image, ScrollView } from "react-native";
 import AppContext from "../../Contexts/AppContext";
 import Header from "../../Components/Header";
 import HttpClient from "../../Services/HttpClient";
@@ -164,53 +164,66 @@ export default function ({ navigation }) {
         </View>
       </View>
 
-      <View style={{ flexDirection: "row", marginBottom: 10, padding: 10 }}>
-        {users.map((user, index) => (
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
-              marginRight: 3,
-              position: "relative",
-            }}
-            key={index}
-          >
-            {isUserOnline(user._id) && (
-              <View
-                style={{
-                  position: "absolute",
-                  top: 2,
-                  left: 2,
-                  backgroundColor: "green",
-                  borderRadius: 50,
-                  width: 10,
-                  height: 10,
-                }}
-              ></View>
-            )}
-            <Text style={{ marginBottom: 5 }}>{user.displayName}</Text>
-            <Text style={{ marginBottom: 5, fontSize: 12, color: "#ccc" }}>
-              {moment().diff(user.age, "years")} &middot; {user.city}
-            </Text>
-            <Image
-              source={
-                user.profileImagePath
-                  ? { uri: config.SERVER_URL + user.profileImagePath }
-                  : require("../../assets/default_profile_image.jpg")
-              }
-              style={{ width: 100, height: 100, marginBottom: 5 }}
-            />
-
-            <View style={{ marginBottom: 5 }}>
-              <Button
-                title="Besøg"
-                onPress={() => navigation.navigate("Profile", { id: user._id })}
+      <ScrollView style={{ flex: 1 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            marginBottom: 10,
+            padding: 10,
+            flexGrow: 1,
+            flexWrap: "wrap",
+          }}
+        >
+          {users.map((user, index) => (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                borderWidth: 1,
+                marginRight: 3,
+                marginBottom: 1,
+                position: "relative",
+              }}
+              key={index}
+            >
+              {isUserOnline(user._id) && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: 2,
+                    left: 2,
+                    backgroundColor: "green",
+                    borderRadius: 50,
+                    width: 10,
+                    height: 10,
+                  }}
+                ></View>
+              )}
+              <Text style={{ marginBottom: 5 }}>{user.displayName}</Text>
+              <Text style={{ marginBottom: 5, fontSize: 12, color: "#ccc" }}>
+                {moment().diff(user.age, "years")} &middot; {user.city}
+              </Text>
+              <Image
+                source={
+                  user.profileImagePath
+                    ? { uri: config.SERVER_URL + user.profileImagePath }
+                    : require("../../assets/default_profile_image.jpg")
+                }
+                style={{ width: 100, height: 100, marginBottom: 5 }}
               />
+
+              <View style={{ marginBottom: 5 }}>
+                <Button
+                  title="Besøg"
+                  onPress={() =>
+                    navigation.navigate("Profile", { id: user._id })
+                  }
+                />
+              </View>
             </View>
-          </View>
-        ))}
-      </View>
+          ))}
+        </View>
+      </ScrollView>
 
       <Button
         disabled={!hasMore}

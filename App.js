@@ -8,9 +8,6 @@ import io from "socket.io-client";
 import NotificationService from "./Services/NotificationService";
 import PermissionService from "./Services/PermissionService";
 
-const notificationService = new NotificationService();
-const permissionService = new PermissionService();
-
 export default function App() {
   const [user, setUser] = useState(null);
   const [initiated, setInitiated] = useState(false);
@@ -20,9 +17,9 @@ export default function App() {
   const [activeConversation, setActiveConversation] = useState(null);
 
   useEffect(() => {
-    permissionService.getPermissions();
+    PermissionService.getPermissions();
     init();
-  }, [setPushToken]);
+  }, []);
 
   useEffect(() => {
     let handler;
@@ -49,7 +46,7 @@ export default function App() {
           socket.emit("notification", notificationData);
         }
 
-        notificationService.handleNotificationHandler(showPushNotification);
+        NotificationService.handleNotificationHandler(showPushNotification);
       };
 
       socket.on("conversation", handler);
@@ -60,7 +57,7 @@ export default function App() {
         socket.off("conversation", handler);
       }
 
-      notificationService.handleNotificationHandler(true);
+      NotificationService.handleNotificationHandler(true);
     };
   }, [socket, activeConversation]);
 
@@ -72,10 +69,6 @@ export default function App() {
     if (user && socket) {
       socket.emit("join-online-users", { userId: user._id });
       socket.on("online-users-data", handler);
-
-      if (!user.pushToken) {
-        notificationService.getPermissions(setUser);
-      }
     }
 
     return () => {
@@ -103,10 +96,6 @@ export default function App() {
       }
     };
   }, [socket, user]);
-
-  const getToken = async () => {
-    return await notificationService.getPermissions();
-  };
 
   const init = async () => {
     const { data } = await (await HttpClient()).get(

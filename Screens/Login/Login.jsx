@@ -6,12 +6,14 @@ import {
   TextInput,
   Button,
   AsyncStorage,
+  KeyboardAvoidingView,
 } from "react-native";
 import config from "../../config";
 import Header from "../../Components/Header";
 import HttpClient from "../../Services/HttpClient";
 import AppContext from "../../Contexts/AppContext";
 import io from "socket.io-client";
+import NotificationService from "../../Services/NotificationService";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -36,9 +38,23 @@ const Login = ({ navigation }) => {
         config.SERVER_URL + "/api/auth/init"
       );
       if (userResponse.data.user) {
+        let token;
+        if (!userResponse.data.user.pushToken) {
+          token = await NotificationService.getPushToken();
+          const data = {
+            pushToken: token,
+          };
+
+          await (await HttpClient()).post(
+            config.SERVER_URL + "/api/user/set-push-token",
+            data
+          );
+        }
+
+        console.log("here");
         setUser(userResponse.data.user);
         setSocket(
-          io(config.SERVER_URL || "http://localhost:5000", {
+          io(config.SERVER_URL, {
             transports: ["websocket"],
             upgrade: false,
           })
@@ -52,32 +68,37 @@ const Login = ({ navigation }) => {
   return (
     <>
       <Header navigation={navigation} title="Log Ind" />
-      <View style={styles.container}>
-        <Text style={styles.header}>Log Ind</Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        style={{ flex: 1 }}
+      >
+        <View style={styles.container}>
+          <Text style={styles.header}>Log Ind</Text>
 
-        {!!error && <Text style={{ color: "red" }}>{error}</Text>}
+          {!!error && <Text style={{ color: "red" }}>{error}</Text>}
 
-        <View style={{ marginBottom: 10 }}>
-          <Text>Email</Text>
-          <TextInput
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            autoFocus
-            style={styles.input}
-            autoCapitalize="none"
-          />
+          <View style={{ marginBottom: 10 }}>
+            <Text>Email</Text>
+            <TextInput
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              autoFocus
+              style={styles.input}
+              autoCapitalize="none"
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <Text>Kodeord</Text>
+            <TextInput
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              style={styles.input}
+              autoCapitalize="none"
+            />
+          </View>
+          <Button title="Log Ind" onPress={() => login()} />
         </View>
-        <View style={{ marginBottom: 10 }}>
-          <Text>Kodeord</Text>
-          <TextInput
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            style={styles.input}
-            autoCapitalize="none"
-          />
-        </View>
-        <Button title="Log Ind" onPress={() => login()} />
-      </View>
+      </KeyboardAvoidingView>
     </>
   );
 };
