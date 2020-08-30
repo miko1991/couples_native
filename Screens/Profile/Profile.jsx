@@ -186,7 +186,7 @@ const Profile = ({ route, navigation }) => {
   }
 
   function isUserOnline() {
-    const onlineUser = onlineUsers.find((u) => u.userId === id);
+    const onlineUser = onlineUsers.find((u) => u.userId === route.params.id);
     return !!onlineUser;
   }
 
@@ -220,7 +220,7 @@ const Profile = ({ route, navigation }) => {
     }
   };
 
-  const isOwnProfile = () => user && id === user._id;
+  const isOwnProfile = () => user && route.params.id === user._id;
 
   const sendMessage = async () => {
     if (!message.trim()) return;
