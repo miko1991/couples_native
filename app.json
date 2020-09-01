@@ -4,7 +4,7 @@
     "slug": "couples-dk",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
@@ -15,14 +15,15 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.mikoo1991.couplesdk"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
       "package": "com.mikoo1991.couplesdk",
-      "versionCode": 3
+      "versionCode": 7,
+      "icon": "./assets/logo.png"
     }
   }
 }
