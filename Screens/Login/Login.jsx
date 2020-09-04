@@ -26,12 +26,18 @@ const Login = ({ navigation }) => {
       email,
       password,
     };
+    let response = null;
 
     try {
-      const response = await (await HttpClient()).post(
+      response = await (await HttpClient()).post(
         config.SERVER_URL + "/api/auth/login",
         data
       );
+    } catch (e) {
+      setError(e.response.data.message);
+    }
+
+    if (response) {
       await AsyncStorage.setItem("token", response.data.token);
 
       const userResponse = await (await HttpClient()).get(
@@ -58,10 +64,7 @@ const Login = ({ navigation }) => {
             upgrade: false,
           })
         );
-        navigation.navigate("Søg Brugere");
       }
-    } catch (e) {
-      setError(e.response.data.message);
     }
   };
 

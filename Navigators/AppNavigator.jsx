@@ -12,8 +12,8 @@ import {
   createDrawerNavigator,
   DrawerItemList,
 } from "@react-navigation/drawer";
+import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../Screens/Login/Login";
-import Dashboard from "../Screens/Dashboard";
 import BrowseUsers from "../Screens/BrowseUsers/BrowseUsers";
 import AppContext from "../Contexts/AppContext";
 import Chat from "../Screens/Chat/Chat";
@@ -22,6 +22,24 @@ import Match from "../Screens/Match/Match";
 import Favorites from "../Screens/Favorites/Favorites";
 import Profile from "../Screens/Profile/Profile";
 import Register from "../Screens/Register/Register";
+import { CommonActions } from "@react-navigation/native";
+import BrowseCategories from "../Screens/Forum/BrowseCategories/BrowseCategories";
+import CreateThread from "../Screens/Forum/CreateThread/CreateThread";
+import ShowCategory from "../Screens/Forum/ShowCategory/ShowCategory";
+import ShowThread from "../Screens/Forum/ShowThread/ShowThread";
+
+const StackNavigator = createStackNavigator();
+
+const ForumStackNavigator = () => {
+  return (
+    <StackNavigator.Navigator screenOptions={{ headerShown: false }}>
+      <StackNavigator.Screen name="Forum" component={BrowseCategories} />
+      <StackNavigator.Screen name="Create Thread" component={CreateThread} />
+      <StackNavigator.Screen name="Show Category" component={ShowCategory} />
+      <StackNavigator.Screen name="Show Thread" component={ShowThread} />
+    </StackNavigator.Navigator>
+  );
+};
 
 const DrawerNavigator = createDrawerNavigator();
 
@@ -94,6 +112,17 @@ export const AppNavigator = () => {
             <View style={{ flex: 1, justifyContent: "flex-end" }}>
               <Button
                 onPress={async () => {
+                  props.navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [
+                        {
+                          name: "Profile",
+                          params: { id: null },
+                        },
+                      ],
+                    })
+                  );
                   props.navigation.navigate("Søg Brugere");
                   props.navigation.closeDrawer();
                   await AsyncStorage.removeItem("token");
@@ -109,11 +138,16 @@ export const AppNavigator = () => {
     >
       <DrawerNavigator.Screen name="Søg Brugere" component={BrowseUsers} />
 
-      {!user && <DrawerNavigator.Screen name="Login" component={Login} />}
-      {!user && <DrawerNavigator.Screen name="Register" component={Register} />}
+      {!user && <DrawerNavigator.Screen name="Log Ind" component={Login} />}
+      {!user && (
+        <DrawerNavigator.Screen name="Opret Bruger" component={Register} />
+      )}
 
       {user && <DrawerNavigator.Screen name="Match" component={Match} />}
       {user && <DrawerNavigator.Screen name="Chat" component={Chat} />}
+      {user && (
+        <DrawerNavigator.Screen name="Forum" component={ForumStackNavigator} />
+      )}
       {user && (
         <DrawerNavigator.Screen name="Favoritter" component={Favorites} />
       )}

@@ -19,6 +19,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Icon } from "react-native-elements";
 
 const Profile = ({ route, navigation }) => {
+  const id = route?.params?.id;
   const { user, setUser, socket, onlineUsers } = useContext(AppContext);
   const [profile, setProfile] = useState(null);
   const [message, setMessage] = useState("");
@@ -59,7 +60,7 @@ const Profile = ({ route, navigation }) => {
   ];
 
   useEffect(() => {
-    if (!route && !route.params && !route.params.id) {
+    if (!route) {
       return navigation.navigate("Søg Brugere");
     }
     getUser();
@@ -186,15 +187,15 @@ const Profile = ({ route, navigation }) => {
   }
 
   function isUserOnline() {
-    const onlineUser = onlineUsers.find((u) => u.userId === route.params.id);
+    if (!route) return false;
+    const onlineUser = onlineUsers.find((u) => u.userId === id);
     return !!onlineUser;
   }
 
   const getUser = async () => {
-    if (!route && !route.params && !route.params.id) return;
+    if (!route) return;
     try {
-      console.log(route.params.id);
-      const id = route.params.id;
+      if (!route) return false;
       setRefreshing(true);
       const { data } = await (await HttpClient()).get(
         config.SERVER_URL + "/api/user/get-user-by-id/" + id
@@ -220,7 +221,10 @@ const Profile = ({ route, navigation }) => {
     }
   };
 
-  const isOwnProfile = () => user && route.params.id === user._id;
+  const isOwnProfile = () => {
+    if (!route) return false;
+    return user && id === user._id;
+  };
 
   const sendMessage = async () => {
     if (!message.trim()) return;
@@ -249,6 +253,7 @@ const Profile = ({ route, navigation }) => {
   };
 
   async function giveAction(gift) {
+    if (!route) return;
     const newGift = {
       type: gift,
       fromUser: user?._id,
