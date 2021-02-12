@@ -329,7 +329,19 @@ const Chat = ({ navigation }) => {
 
   return (
     <>
-      <Header navigation={navigation} title="Chat" />
+      <Header
+        navigation={navigation}
+        rightComponent={
+          rightPaneActive
+            ? {
+                icon: "arrow-back",
+                color: "white",
+                onPress: () => resetConversation(),
+              }
+            : null
+        }
+        title="Chat"
+      />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
         style={{ flex: 1 }}
@@ -357,7 +369,6 @@ const Chat = ({ navigation }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    borderBottomWidth: 1,
                     padding: 5,
                     marginBottom: 5,
                   }}
@@ -400,11 +411,10 @@ const Chat = ({ navigation }) => {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-around",
+                justifyContent: "space-evenly",
                 padding: 5,
               }}
             >
-              <Button onPress={() => resetConversation()} title="Tilbage" />
               <Button
                 onPress={() => {}}
                 title={getRecipient(currentConversation).displayName}
@@ -460,6 +470,7 @@ const Chat = ({ navigation }) => {
                         marginBottom: 5,
                         borderRadius: 5,
                         maxWidth: "50%",
+                        width: "50%",
                       }}
                     >
                       <Text style={{ fontWeight: "bold" }}>

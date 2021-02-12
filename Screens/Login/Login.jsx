@@ -46,16 +46,14 @@ const Login = ({ navigation }) => {
       if (userResponse.data.user) {
         let token;
         if (!userResponse.data.user.pushToken) {
-          token = await NotificationService.getPushToken();
-
-          const data = {
-            pushToken: token,
-          };
-
-          const response = await (await HttpClient()).post(
-            config.SERVER_URL + "/api/user/set-push-token",
-            data
-          );
+          //token = await NotificationService.getPushToken();
+          // const data = {
+          //   pushToken: token,
+          // };
+          // const response = await (await HttpClient()).post(
+          //   config.SERVER_URL + "/api/user/set-push-token",
+          //   data
+          // );
         }
         setUser(userResponse.data.user);
         setSocket(

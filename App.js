@@ -98,20 +98,25 @@ export default function App() {
   }, [socket, user]);
 
   const init = async () => {
-    const { data } = await (await HttpClient()).get(
-      config.SERVER_URL + "/api/auth/init"
-    );
-
-    if (data.user) {
-      setUser(data.user);
-      setSocket(
-        io(config.SERVER_URL, {
-          transports: ["websocket"],
-          upgrade: false,
-        })
+    try {
+      console.log(config.SERVER_URL);
+      const { data } = await (await HttpClient()).get(
+        config.SERVER_URL + "/api/auth/init"
       );
+
+      if (data.user) {
+        setUser(data.user);
+        setSocket(
+          io(config.SERVER_URL, {
+            transports: ["websocket"],
+            upgrade: false,
+          })
+        );
+      }
+      setInitiated(true);
+    } catch (error) {
+      console.log(error.message);
     }
-    setInitiated(true);
   };
 
   return (

@@ -136,11 +136,13 @@ export const AppNavigator = () => {
         );
       }}
     >
-      <DrawerNavigator.Screen name="Søg Brugere" component={BrowseUsers} />
-
       {!user && <DrawerNavigator.Screen name="Log Ind" component={Login} />}
       {!user && (
         <DrawerNavigator.Screen name="Opret Bruger" component={Register} />
+      )}
+
+      {user && (
+        <DrawerNavigator.Screen name="Søg Brugere" component={BrowseUsers} />
       )}
 
       {user && <DrawerNavigator.Screen name="Match" component={Match} />}
